@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Reportes de Mantenimiento</title>
+</head>
+<body>
+
+    <h1>Sistema de Reportes de Mantenimiento</h1>
+    <h2>Colegio Cristiano Mixto Bilingüe Mi Dulce Paraíso</h2>
+
+    <form id="formulario">
+        <label for="nombre">Escribe tu nombre:</label>
+        <input type="text" id="nombre" required>
+        <button type="submit">Enviar</button>
+    </form>
+
+    <p id="respuesta"></p>
+
+    <script>
+        const formulario = document.getElementById("formulario");
+        const respuesta = document.getElementById("respuesta");
+
+        formulario.addEventListener("submit", async function(event) {
+            event.preventDefault();
+
+            const nombre = document.getElementById("nombre").value;
+
+            const response = await fetch(
+                "/api/bienvenida?nombre=" + encodeURIComponent(nombre)
+            );
+
+            const mensaje = await response.text();
+            respuesta.textContent = mensaje;
+        });
+    </script>
+
+</body>
+</html>
