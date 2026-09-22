@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reportes de Mantenimiento</title>
+</head>
+
+<body>
+
+    <h1>Sistema de Reportes de Mantenimiento</h1>
+
+    <h2>Colegio Cristiano Mixto Bilingüe Mi Dulce Paraíso</h2>
+
+    <h3>Reportes registrados</h3>
+
+    <p>
+        Total de reportes:
+        <strong th:text="${total}">0</strong>
+    </p>
+
+    <table border="1">
+
+        <thead>
+            <tr>
+                <th>Título</th>
+                <th>Descripción</th>
+                <th>Ubicación</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr th:each="reporte : ${reportes}">
+                <td th:text="${reporte.titulo}">Título</td>
+                <td th:text="${reporte.descripcion}">Descripción</td>
+                <td th:text="${reporte.ubicacion}">Ubicación</td>
+                <td th:text="${reporte.estado}">Estado</td>
+            </tr>
+        </tbody>
+
+    </table>
+
+    <br>
+
+    <a th:href="@{/reportes/nuevo}">Registrar nuevo reporte</a>
+
+</body>
+
+</html>

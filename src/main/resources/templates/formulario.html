@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuevo Reporte de Mantenimiento</title>
+</head>
+
+<body>
+
+    <h1>Sistema de Reportes de Mantenimiento</h1>
+    <h2>Colegio Cristiano Mixto Bilingüe Mi Dulce Paraíso</h2>
+
+    <h3>Registrar nuevo reporte</h3>
+
+    <form th:action="@{/reportes}" th:object="${reporte}" method="post">
+
+        <div>
+            <label for="titulo">Título del reporte:</label>
+            <input type="text"
+                   id="titulo"
+                   th:field="*{titulo}"
+                   required>
+        </div>
+
+        <br>
+
+        <div>
+            <label for="descripcion">Descripción:</label>
+            <input type="text"
+                   id="descripcion"
+                   th:field="*{descripcion}"
+                   required>
+        </div>
+
+        <br>
+
+        <div>
+            <label for="ubicacion">Ubicación:</label>
+            <input type="text"
+                   id="ubicacion"
+                   th:field="*{ubicacion}"
+                   required>
+        </div>
+
+        <br>
+
+        <div>
+            <label for="estado">Estado:</label>
+            <input type="text"
+                   id="estado"
+                   th:field="*{estado}"
+                   required>
+        </div>
+
+        <br>
+
+        <button type="submit">Guardar reporte</button>
+
+    </form>
+
+    <br>
+
+    <a th:href="@{/reportes}">Ver reportes registrados</a>
+
+</body>
+
+</html>
