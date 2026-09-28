@@ -2,12 +2,15 @@ package gt.edu.url.miparaiso.sistema_reportes_mantenimiento.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import gt.edu.url.miparaiso.sistema_reportes_mantenimiento.model.ReporteMantenimiento;
 import gt.edu.url.miparaiso.sistema_reportes_mantenimiento.service.ReporteMantenimientoService;
+
+import jakarta.validation.Valid;
 
 @Controller
 public class ReporteMantenimientoController {
@@ -25,10 +28,16 @@ public class ReporteMantenimientoController {
         return "formulario";
     }
 
-    // POST: recibe y guarda el reporte
+    // POST: valida, recibe y guarda el reporte
     @PostMapping("/reportes")
     public String guardarReporte(
-            @ModelAttribute("reporte") ReporteMantenimiento reporte) {
+            @Valid @ModelAttribute("reporte") ReporteMantenimiento reporte,
+            BindingResult resultado) {
+
+        // Si hay errores, vuelve al formulario sin guardar
+        if (resultado.hasErrors()) {
+            return "formulario";
+        }
 
         reporteService.guardar(reporte);
 

@@ -1,17 +1,33 @@
 package gt.edu.url.miparaiso.sistema_reportes_mantenimiento.model;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+
 public class ReporteMantenimiento {
 
+    @NotBlank(message = "El título del reporte es obligatorio.")
+    @Size(min = 5, max = 60, message = "El título debe tener entre 5 y 60 caracteres.")
     private String titulo;
+
+    @NotBlank(message = "La descripción del problema es obligatoria.")
+    @Size(min = 10, max = 250, message = "La descripción debe tener entre 10 y 250 caracteres.")
     private String descripcion;
+
+    @NotBlank(message = "La ubicación del problema es obligatoria.")
+    @Size(min = 3, max = 80, message = "La ubicación debe tener entre 3 y 80 caracteres.")
     private String ubicacion;
+
+    @NotBlank(message = "El estado del reporte es obligatorio.")
+    @Pattern(
+        regexp = "Pendiente|En revisión|Resuelto",
+        message = "El estado debe ser Pendiente, En revisión o Resuelto."
+    )
     private String estado;
 
-    // Constructor vacío
     public ReporteMantenimiento() {
     }
 
-    // Constructor con parámetros
     public ReporteMantenimiento(
             String titulo,
             String descripcion,
@@ -24,7 +40,6 @@ public class ReporteMantenimiento {
         this.estado = estado;
     }
 
-    // Getter y Setter de titulo
     public String getTitulo() {
         return titulo;
     }
@@ -33,7 +48,6 @@ public class ReporteMantenimiento {
         this.titulo = titulo;
     }
 
-    // Getter y Setter de descripcion
     public String getDescripcion() {
         return descripcion;
     }
@@ -42,7 +56,6 @@ public class ReporteMantenimiento {
         this.descripcion = descripcion;
     }
 
-    // Getter y Setter de ubicacion
     public String getUbicacion() {
         return ubicacion;
     }
@@ -51,7 +64,6 @@ public class ReporteMantenimiento {
         this.ubicacion = ubicacion;
     }
 
-    // Getter y Setter de estado
     public String getEstado() {
         return estado;
     }

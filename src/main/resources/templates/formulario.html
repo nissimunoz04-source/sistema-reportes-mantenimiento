@@ -4,7 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Nuevo Reporte de Mantenimiento</title>
+
+    <link rel="stylesheet" th:href="@{/estilos.css}">
 </head>
 
 <body>
@@ -14,44 +17,101 @@
 
     <h3>Registrar nuevo reporte</h3>
 
-    <form th:action="@{/reportes}" th:object="${reporte}" method="post">
+    <form th:action="@{/reportes}"
+          th:object="${reporte}"
+          method="post"
+          novalidate>
 
+        <!-- Resumen de errores -->
+        <div class="resumen-errores"
+             role="alert"
+             th:if="${#fields.hasAnyErrors()}">
+
+            <p>
+                <strong>Revisa estos datos antes de continuar:</strong>
+            </p>
+
+            <ul>
+                <li th:each="error : ${#fields.allErrors()}"
+                    th:text="${error}">
+                    Error
+                </li>
+            </ul>
+
+        </div>
+
+        <!-- TÍTULO -->
         <div>
             <label for="titulo">Título del reporte:</label>
+
             <input type="text"
                    id="titulo"
                    th:field="*{titulo}"
-                   required>
+                   aria-describedby="error-titulo">
+
+            <p id="error-titulo"
+               class="mensaje-error"
+               th:if="${#fields.hasErrors('titulo')}"
+               th:errors="*{titulo}">
+                Error en el título
+            </p>
         </div>
 
         <br>
 
+        <!-- DESCRIPCIÓN -->
         <div>
             <label for="descripcion">Descripción:</label>
+
             <input type="text"
                    id="descripcion"
                    th:field="*{descripcion}"
-                   required>
+                   aria-describedby="error-descripcion">
+
+            <p id="error-descripcion"
+               class="mensaje-error"
+               th:if="${#fields.hasErrors('descripcion')}"
+               th:errors="*{descripcion}">
+                Error en la descripción
+            </p>
         </div>
 
         <br>
 
+        <!-- UBICACIÓN -->
         <div>
             <label for="ubicacion">Ubicación:</label>
+
             <input type="text"
                    id="ubicacion"
                    th:field="*{ubicacion}"
-                   required>
+                   aria-describedby="error-ubicacion">
+
+            <p id="error-ubicacion"
+               class="mensaje-error"
+               th:if="${#fields.hasErrors('ubicacion')}"
+               th:errors="*{ubicacion}">
+                Error en la ubicación
+            </p>
         </div>
 
         <br>
 
+        <!-- ESTADO -->
         <div>
             <label for="estado">Estado:</label>
+
             <input type="text"
                    id="estado"
                    th:field="*{estado}"
-                   required>
+                   aria-describedby="error-estado">
+
+            <p id="error-estado"
+               class="mensaje-error"
+               th:if="${#fields.hasErrors('estado')}"
+               th:errors="*{estado}">
+                Error en el estado
+            </p>
         </div>
 
         <br>
