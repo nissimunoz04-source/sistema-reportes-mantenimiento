@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Nuevo Reporte de Mantenimiento</title>
+    <title>Reporte de Mantenimiento</title>
 
     <link rel="stylesheet" th:href="@{/estilos.css}">
 </head>
@@ -15,12 +15,17 @@
     <h1>Sistema de Reportes de Mantenimiento</h1>
     <h2>Colegio Cristiano Mixto Bilingüe Mi Dulce Paraíso</h2>
 
-    <h3>Registrar nuevo reporte</h3>
+    <h3 th:text="${reporte.id == null} ? 'Registrar nuevo reporte' : 'Editar reporte'">
+        Registrar nuevo reporte
+    </h3>
 
     <form th:action="@{/reportes}"
           th:object="${reporte}"
           method="post"
           novalidate>
+
+        <!-- ID oculto: permite actualizar sin crear un registro duplicado -->
+        <input type="hidden" th:field="*{id}">
 
         <!-- Resumen de errores -->
         <div class="resumen-errores"
@@ -116,7 +121,10 @@
 
         <br>
 
-        <button type="submit">Guardar reporte</button>
+        <button type="submit"
+                th:text="${reporte.id == null} ? 'Guardar reporte' : 'Guardar cambios'">
+            Guardar reporte
+        </button>
 
     </form>
 

@@ -24,27 +24,68 @@
 
         <thead>
             <tr>
+                <th>ID</th>
                 <th>Título</th>
                 <th>Descripción</th>
                 <th>Ubicación</th>
                 <th>Estado</th>
+                <th>Acciones</th>
             </tr>
         </thead>
 
         <tbody>
+
             <tr th:each="reporte : ${reportes}">
-                <td th:text="${reporte.titulo}">Título</td>
-                <td th:text="${reporte.descripcion}">Descripción</td>
-                <td th:text="${reporte.ubicacion}">Ubicación</td>
-                <td th:text="${reporte.estado}">Estado</td>
+
+                <td th:text="${reporte.id}">1</td>
+
+                <td th:text="${reporte.titulo}">
+                    Título
+                </td>
+
+                <td th:text="${reporte.descripcion}">
+                    Descripción
+                </td>
+
+                <td th:text="${reporte.ubicacion}">
+                    Ubicación
+                </td>
+
+                <td th:text="${reporte.estado}">
+                    Estado
+                </td>
+
+                <td>
+
+                    <!-- EDITAR -->
+                    <a th:href="@{/reportes/{id}/editar(id=${reporte.id})}">
+                        Editar
+                    </a>
+
+                    <!-- ELIMINAR -->
+                    <form th:action="@{/reportes/{id}/eliminar(id=${reporte.id})}"
+                          method="post"
+                          style="display:inline;">
+
+                        <button type="submit">
+                            Eliminar
+                        </button>
+
+                    </form>
+
+                </td>
+
             </tr>
+
         </tbody>
 
     </table>
 
     <br>
 
-    <a th:href="@{/reportes/nuevo}">Registrar nuevo reporte</a>
+    <a th:href="@{/reportes/nuevo}">
+        Registrar nuevo reporte
+    </a>
 
 </body>
 

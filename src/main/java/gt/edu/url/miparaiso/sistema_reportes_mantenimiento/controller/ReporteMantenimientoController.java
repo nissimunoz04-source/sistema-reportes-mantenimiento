@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import gt.edu.url.miparaiso.sistema_reportes_mantenimiento.model.ReporteMantenimiento;
@@ -21,20 +22,19 @@ public class ReporteMantenimientoController {
         this.reporteService = reporteService;
     }
 
-    // GET: muestra el formulario vacío
+    // GET: muestra el formulario para registrar un reporte nuevo
     @GetMapping("/reportes/nuevo")
     public String mostrarFormulario(Model model) {
         model.addAttribute("reporte", new ReporteMantenimiento());
         return "formulario";
     }
 
-    // POST: valida, recibe y guarda el reporte
+    // POST: valida y guarda un reporte nuevo o editado
     @PostMapping("/reportes")
     public String guardarReporte(
             @Valid @ModelAttribute("reporte") ReporteMantenimiento reporte,
             BindingResult resultado) {
 
-        // Si hay errores, vuelve al formulario sin guardar
         if (resultado.hasErrors()) {
             return "formulario";
         }
@@ -52,5 +52,26 @@ public class ReporteMantenimientoController {
         model.addAttribute("total", reporteService.contar());
 
         return "lista";
+    }
+
+    // GET: abre el formulario con los datos del reporte que se editará
+    @GetMapping("/reportes/{id}/editar")
+    public String editarReporte(
+            @PathVariable Long id,
+            Model model) {
+
+        ReporteMantenimiento reporte = reporteService.buscarPorId(id);
+        model.addAttribute("reporte", reporte);
+
+        return "formulario";
+    }
+
+    // POST: elimina un reporte por su ID
+    @PostMapping("/reportes/{id}/eliminar")
+    public String eliminarReporte(@PathVariable Long id) {
+
+        reporteService.eliminar(id);
+
+        return "redirect:/reportes";
     }
 }
