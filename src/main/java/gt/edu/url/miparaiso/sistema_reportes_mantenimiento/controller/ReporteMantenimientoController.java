@@ -1,3 +1,4 @@
+
 package gt.edu.url.miparaiso.sistema_reportes_mantenimiento.controller;
 
 import org.springframework.stereotype.Controller;
@@ -18,18 +19,22 @@ public class ReporteMantenimientoController {
 
     private final ReporteMantenimientoService reporteService;
 
-    public ReporteMantenimientoController(ReporteMantenimientoService reporteService) {
+    public ReporteMantenimientoController(
+            ReporteMantenimientoService reporteService) {
+
         this.reporteService = reporteService;
     }
 
-    // GET: muestra el formulario para registrar un reporte nuevo
+    // Muestra el formulario para registrar un reporte nuevo
     @GetMapping("/reportes/nuevo")
     public String mostrarFormulario(Model model) {
+
         model.addAttribute("reporte", new ReporteMantenimiento());
+
         return "formulario";
     }
 
-    // POST: valida y guarda un reporte nuevo o editado
+    // Valida y guarda un reporte nuevo o editado
     @PostMapping("/reportes")
     public String guardarReporte(
             @Valid @ModelAttribute("reporte") ReporteMantenimiento reporte,
@@ -44,7 +49,7 @@ public class ReporteMantenimientoController {
         return "redirect:/reportes";
     }
 
-    // GET: muestra todos los reportes registrados
+    // Muestra todos los reportes registrados
     @GetMapping("/reportes")
     public String listarReportes(Model model) {
 
@@ -54,19 +59,20 @@ public class ReporteMantenimientoController {
         return "lista";
     }
 
-    // GET: abre el formulario con los datos del reporte que se editará
+    // Abre el formulario con los datos del reporte seleccionado
     @GetMapping("/reportes/{id}/editar")
     public String editarReporte(
             @PathVariable Long id,
             Model model) {
 
         ReporteMantenimiento reporte = reporteService.buscarPorId(id);
+
         model.addAttribute("reporte", reporte);
 
         return "formulario";
     }
 
-    // POST: elimina un reporte por su ID
+    // Elimina un reporte por su ID
     @PostMapping("/reportes/{id}/eliminar")
     public String eliminarReporte(@PathVariable Long id) {
 
