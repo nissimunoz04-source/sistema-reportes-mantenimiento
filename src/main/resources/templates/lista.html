@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta charset="UTF-8">
@@ -12,6 +14,22 @@
     <h1>Sistema de Reportes de Mantenimiento</h1>
 
     <h2>Colegio Cristiano Mixto Bilingüe Mi Dulce Paraíso</h2>
+
+    <!-- INFORMACIÓN DEL USUARIO CONECTADO -->
+    <div>
+        <p>
+            Sesión de:
+            <strong sec:authentication="name">usuario</strong>
+        </p>
+
+        <form th:action="@{/logout}" method="post">
+            <button type="submit">
+                Cerrar sesión
+            </button>
+        </form>
+    </div>
+
+    <hr>
 
     <h3>Reportes registrados</h3>
 
@@ -29,7 +47,11 @@
                 <th>Descripción</th>
                 <th>Ubicación</th>
                 <th>Estado</th>
-                <th>Acciones</th>
+
+                <!-- SOLO ADMIN VE ESTA COLUMNA -->
+                <th sec:authorize="hasRole('ADMIN')">
+                    Acciones
+                </th>
             </tr>
         </thead>
 
@@ -55,7 +77,8 @@
                     Estado
                 </td>
 
-                <td>
+                <!-- SOLO ADMIN PUEDE VER EDITAR Y ELIMINAR -->
+                <td sec:authorize="hasRole('ADMIN')">
 
                     <!-- EDITAR -->
                     <a th:href="@{/reportes/{id}/editar(id=${reporte.id})}">
@@ -63,9 +86,10 @@
                     </a>
 
                     <!-- ELIMINAR -->
-                    <form th:action="@{/reportes/{id}/eliminar(id=${reporte.id})}"
-                          method="post"
-                          style="display:inline;">
+                    <form
+                        th:action="@{/reportes/{id}/eliminar(id=${reporte.id})}"
+                        method="post"
+                        style="display:inline;">
 
                         <button type="submit">
                             Eliminar
@@ -83,8 +107,12 @@
 
     <br>
 
-    <a th:href="@{/reportes/nuevo}">
+    <!-- SOLO ADMIN PUEDE REGISTRAR REPORTES -->
+    <a th:href="@{/reportes/nuevo}"
+       sec:authorize="hasRole('ADMIN')">
+
         Registrar nuevo reporte
+
     </a>
 
 </body>

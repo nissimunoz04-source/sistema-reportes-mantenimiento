@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Acceso denegado - Mi Dulce Paraíso</title>
+
+    <link rel="stylesheet" th:href="@{/estilos.css}">
+</head>
+
+<body>
+
+    <main>
+
+        <h1>
+            Colegio Cristiano Mixto Bilingüe
+            Mi Dulce Paraíso
+        </h1>
+
+        <h2>Acceso denegado</h2>
+
+        <div class="aviso error" role="alert">
+
+            <p>
+                <strong>
+                    No tienes permiso para realizar esta acción.
+                </strong>
+            </p>
+
+            <p>
+                Tu usuario puede consultar los reportes
+                de mantenimiento, pero solamente el
+                administrador puede registrar, editar
+                o eliminar reportes.
+            </p>
+
+        </div>
+
+        <p>
+            <a th:href="@{/reportes}">
+                Volver a la lista de reportes
+            </a>
+        </p>
+
+    </main>
+
+</body>
+</html>
