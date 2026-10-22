@@ -1,27 +1,1810 @@
-/* Estilos para los mensajes de error */
+/* ==========================================
+
+   SISTEMA DE REPORTES DE MANTENIMIENTO
+
+   COLEGIO MI DULCE PARAÍSO
+
+   ========================================== */
+
+/* Tipografías */
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap');
+
+/* Colores institucionales */
+
+:root {
+
+    --azul: #4597e8;
+
+    --azul-oscuro: #245c98;
+
+    --azul-claro: #e3f3ff;
+
+    --amarillo: #ffda45;
+
+    --amarillo-claro: #fff7d6;
+
+    --naranja: #ff9e36;
+
+    --rojo: #d93b43;
+
+    --rojo-claro: #fff0f0;
+
+    --verde: #24856b;
+
+    --verde-claro: #e4f8ee;
+
+    --texto: #293d55;
+
+    --blanco: #ffffff;
+
+    --borde: #dce9f4;
+
+}
+
+/* Estilos generales */
+
+* {
+
+    box-sizing: border-box;
+
+}
+
+body {
+
+    margin: 0;
+
+    padding: 35px 5%;
+
+    min-height: 100vh;
+
+    font-family: 'Nunito', sans-serif;
+
+    color: var(--texto);
+
+    line-height: 1.6;
+
+    background:
+
+        radial-gradient(
+
+            circle at 95% 5%,
+
+            #fff4c9,
+
+            transparent 28%
+
+        ),
+
+        radial-gradient(
+
+            circle at 5% 95%,
+
+            #d8eeff,
+
+            transparent 35%
+
+        ),
+
+        #f5faff;
+
+}
+
+h1, h2, h3 {
+
+    font-family: 'Poppins', sans-serif;
+
+}
+
+h1 {
+
+    color: var(--azul-oscuro);
+
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+
+    margin-bottom: 5px;
+
+}
+
+h2 {
+
+    color: #66829d;
+
+    font-size: 1rem;
+
+    font-weight: 500;
+
+    margin-top: 0;
+
+    margin-bottom: 28px;
+
+}
+
+h3 {
+
+    color: var(--azul-oscuro);
+
+    font-size: 1.3rem;
+
+}
+
+a {
+
+    color: var(--azul-oscuro);
+
+    font-weight: 800;
+
+    text-decoration: none;
+
+}
+
+a:hover {
+
+    color: var(--azul);
+
+    text-decoration: underline;
+
+}
+
+/* Formularios */
+
+form {
+
+    margin: 18px 0;
+
+}
+
+label {
+
+    display: block;
+
+    margin-bottom: 7px;
+
+    font-weight: 800;
+
+}
+
+input:not([type="hidden"]),
+
+select,
+
+textarea {
+
+    width: 100%;
+
+    max-width: 580px;
+
+    padding: 13px 15px;
+
+    border: 2px solid var(--borde);
+
+    border-radius: 13px;
+
+    background: white;
+
+    color: var(--texto);
+
+    font-family: 'Nunito', sans-serif;
+
+    font-size: 1rem;
+
+    transition: border-color .2s, box-shadow .2s;
+
+}
+
+input:focus,
+
+select:focus,
+
+textarea:focus {
+
+    outline: none;
+
+    border-color: var(--azul);
+
+    box-shadow: 0 0 0 4px rgba(69,151,232,.14);
+
+}
+
+/* Botones */
+
+button,
+
+input[type="submit"] {
+
+    padding: 11px 20px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: var(--azul);
+
+    color: white;
+
+    font-family: 'Poppins', sans-serif;
+
+    font-size: .9rem;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow: 0 5px 12px rgba(69,151,232,.18);
+
+    transition: transform .2s, background .2s;
+
+}
+
+button:hover,
+
+input[type="submit"]:hover {
+
+    background: var(--azul-oscuro);
+
+    transform: translateY(-2px);
+
+}
+
+button:focus-visible,
+
+a:focus-visible {
+
+    outline: 3px solid var(--naranja);
+
+    outline-offset: 3px;
+
+}
+
+/* Tablas de reportes */
+
+table {
+
+    width: 100%;
+
+    border-collapse: separate;
+
+    border-spacing: 0;
+
+    margin: 24px 0;
+
+    background: white;
+
+    border: 1px solid var(--borde);
+
+    border-radius: 16px;
+
+    overflow: hidden;
+
+    box-shadow: 0 10px 30px rgba(45,93,140,.08);
+
+}
+
+th {
+
+    background: var(--azul-claro);
+
+    color: var(--azul-oscuro);
+
+    font-family: 'Poppins', sans-serif;
+
+    font-size: .88rem;
+
+    text-align: left;
+
+    padding: 15px;
+
+}
+
+td {
+
+    padding: 14px 15px;
+
+    border-top: 1px solid #edf2f7;
+
+    vertical-align: middle;
+
+}
+
+tbody tr:hover {
+
+    background: #f8fcff;
+
+}
+
+td a {
+
+    display: inline-block;
+
+    margin: 3px;
+
+    padding: 7px 12px;
+
+    border-radius: 9px;
+
+    background: var(--azul-claro);
+
+}
+
+td form {
+
+    display: inline-block;
+
+    margin: 3px;
+
+}
+
+td button {
+
+    background: var(--rojo);
+
+    padding: 8px 12px;
+
+    font-size: .8rem;
+
+    box-shadow: none;
+
+}
+
+td button:hover {
+
+    background: #ad2631;
+
+}
+
+/* Mensajes de validación */
 
 .mensaje-error {
-    border: 3px solid;
-    padding: 8px;
-    margin-top: 6px;
-    font-weight: bold;
-    background-color: #f5f5f5;
+
+    max-width: 580px;
+
+    padding: 10px 14px;
+
+    margin-top: 8px;
+
+    border: 1px solid #ffc5c5;
+
+    border-left: 4px solid var(--rojo);
+
+    border-radius: 10px;
+
+    background: var(--rojo-claro);
+
+    color: #a32933;
+
+    font-weight: 800;
+
 }
 
 .mensaje-error::before {
-    content: "▲ ";
+
+    content: "⚠ ";
+
 }
 
-/* Resumen de errores */
-
 .resumen-errores {
-    border: 3px solid;
-    padding: 12px;
-    margin-bottom: 20px;
-    background-color: #f5f5f5;
+
+    max-width: 650px;
+
+    padding: 15px 20px;
+
+    margin-bottom: 24px;
+
+    border: 1px solid #ffc5c5;
+
+    border-left: 5px solid var(--rojo);
+
+    border-radius: 14px;
+
+    background: var(--rojo-claro);
+
+    color: #a32933;
+
 }
 
 .resumen-errores::before {
-    content: "▲ ";
-    font-weight: bold;
+
+    content: "⚠ Atención: ";
+
+    font-weight: 800;
+
+}
+
+.resumen-errores ul {
+
+    padding-left: 20px;
+
+}
+
+/* ==========================================
+
+   PANTALLA DE INICIO DE SESIÓN
+
+   ========================================== */
+
+.pagina-login {
+
+    min-height: 100vh;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 35px 20px;
+
+    background:
+
+        radial-gradient(
+
+            circle at 90% 10%,
+
+            #fff0ad 0%,
+
+            transparent 35%
+
+        ),
+
+        radial-gradient(
+
+            circle at 10% 90%,
+
+            #cdeaff 0%,
+
+            transparent 45%
+
+        ),
+
+        #f6fbff;
+
+}
+
+/* Contenedor central */
+
+.login-contenedor {
+
+    width: 100%;
+
+    max-width: 600px;
+
+    text-align: center;
+
+}
+
+/* Logo a la izquierda del título */
+
+.login-encabezado {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 22px;
+
+    margin-bottom: 30px;
+
+    text-align: left;
+
+}
+
+.login-logo {
+
+    width: 125px;
+
+    height: 125px;
+
+    flex-shrink: 0;
+
+    object-fit: contain;
+
+    filter: drop-shadow(
+
+        0 7px 12px rgba(45,93,140,.12)
+
+    );
+
+}
+
+.login-identidad {
+
+    flex: 1;
+
+    min-width: 0;
+
+}
+
+.login-encabezado h1 {
+
+    margin: 0 0 10px;
+
+    font-family: 'Poppins', sans-serif;
+
+    font-size: 1.75rem;
+
+    font-weight: 800;
+
+    line-height: 1.25;
+
+    color: var(--azul-oscuro);
+
+    text-align: left;
+
+}
+
+.login-colegio {
+
+    margin: 0;
+
+    font-family: 'Nunito', sans-serif;
+
+    color: #66829d;
+
+    font-size: .95rem;
+
+    font-weight: 700;
+
+    line-height: 1.5;
+
+    text-align: left;
+
+}
+
+/* Tarjeta blanca */
+
+.login-tarjeta {
+
+    padding: 38px;
+
+    background: rgba(255,255,255,.96);
+
+    border: 1px solid #e0edf8;
+
+    border-radius: 25px;
+
+    box-shadow:
+
+        0 18px 55px rgba(45,93,140,.12);
+
+    text-align: left;
+
+}
+
+.login-tarjeta h2 {
+
+    margin: 0 0 5px;
+
+    color: var(--azul-oscuro);
+
+    font-family: 'Poppins', sans-serif;
+
+    font-size: 1.5rem;
+
+    font-weight: 700;
+
+    text-align: center;
+
+}
+
+.login-subtitulo {
+
+    margin: 0 0 28px;
+
+    color: #7890a5;
+
+    text-align: center;
+
+}
+
+/* Campos del login */
+
+.login-formulario {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 19px;
+
+    margin: 0;
+
+}
+
+.campo-login label {
+
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #294b70;
+
+    font-weight: 800;
+
+}
+
+.campo-login input {
+
+    width: 100%;
+
+    max-width: none;
+
+    padding: 14px 16px;
+
+    border: 2px solid #dce9f4;
+
+    border-radius: 13px;
+
+    font-family: 'Nunito', sans-serif;
+
+    font-size: 1rem;
+
+    background: #fafdff;
+
+}
+
+.campo-login input:focus {
+
+    outline: none;
+
+    border-color: var(--azul);
+
+    box-shadow:
+
+        0 0 0 4px rgba(69,151,232,.15);
+
+}
+
+/* Botón de ingreso */
+
+.login-boton {
+
+    width: 100%;
+
+    margin-top: 8px;
+
+    padding: 15px;
+
+    border-radius: 13px;
+
+    background: var(--azul);
+
+    color: white;
+
+    font-family: 'Poppins', sans-serif;
+
+    font-weight: 700;
+
+    font-size: 1rem;
+
+}
+
+.login-boton:hover {
+
+    background: var(--azul-oscuro);
+
+}
+
+/* Mensajes de acceso */
+
+.aviso {
+
+    margin-bottom: 18px;
+
+    padding: 12px 15px;
+
+    border-radius: 12px;
+
+    font-weight: 700;
+
+    text-align: center;
+
+}
+
+.aviso.error {
+
+    background: var(--rojo-claro);
+
+    border: 1px solid #ffcaca;
+
+    color: #b52c39;
+
+}
+
+.aviso.exito {
+
+    background: var(--verde-claro);
+
+    border: 1px solid #b8e8ce;
+
+    color: #24765d;
+
+}
+
+/* Lema institucional */
+
+.login-pie {
+
+    margin-top: 25px;
+
+    color: #9c7a2c;
+
+    font-family: 'Nunito', sans-serif;
+
+    font-size: .88rem;
+
+    font-weight: 800;
+
+    text-align: center;
+
+}
+
+.login-pie span {
+
+    color: #66829d;
+
+}
+
+/* ==========================================
+
+   DISEÑO ADAPTABLE A CELULARES
+
+   ========================================== */
+
+@media (max-width: 700px) {
+
+    body {
+
+        padding: 20px 15px;
+
+    }
+
+    table {
+
+        display: block;
+
+        overflow-x: auto;
+
+    }
+
+    th, td {
+
+        min-width: 110px;
+
+        padding: 10px;
+
+    }
+
+    .pagina-login {
+
+        padding: 25px 15px;
+
+    }
+
+    .login-tarjeta {
+
+        padding: 28px 22px;
+
+    }
+
+    .login-encabezado {
+
+        gap: 15px;
+
+    }
+
+    .login-logo {
+
+        width: 95px;
+
+        height: 95px;
+
+    }
+
+    .login-encabezado h1 {
+
+        font-size: 1.4rem;
+
+    }
+
+    .login-colegio {
+
+        font-size: .85rem;
+
+    }
+
+}
+
+@media (max-width: 420px) {
+
+    .login-logo {
+
+        width: 75px;
+
+        height: 75px;
+
+    }
+
+    .login-encabezado {
+
+        gap: 12px;
+
+    }
+
+    .login-encabezado h1 {
+
+        font-size: 1.15rem;
+
+    }
+
+    .login-tarjeta {
+
+        padding: 25px 18px;
+
+    }
+
+    .login-pie span {
+
+        display: block;
+
+    }
+
+}
+
+/* ==========================================
+
+   PANTALLA DE LISTA DE REPORTES
+
+   MI DULCE PARAÍSO
+
+   ========================================== */
+
+.pagina-reportes {
+
+    min-height: 100vh;
+
+    padding: 35px 5%;
+
+    background:
+
+        radial-gradient(
+
+            circle at 95% 5%,
+
+            #fff0ad 0%,
+
+            transparent 35%
+
+        ),
+
+        radial-gradient(
+
+            circle at 5% 95%,
+
+            #cdeaff 0%,
+
+            transparent 45%
+
+        ),
+
+        #f6fbff;
+
+}
+
+.reportes-contenedor {
+
+    max-width: 1350px;
+
+    margin: 0 auto;
+
+}
+
+/* Encabezado */
+
+.reportes-encabezado {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 25px;
+
+    margin-bottom: 30px;
+
+}
+
+.reportes-marca {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 20px;
+
+}
+
+.reportes-logo {
+
+    width: 100px;
+
+    height: 100px;
+
+    object-fit: contain;
+
+    flex-shrink: 0;
+
+}
+
+.reportes-identidad h1 {
+
+    max-width: 650px;
+
+    margin: 0 0 6px;
+
+    color: #245c98;
+
+    font-family: 'Poppins', sans-serif;
+
+    font-size: clamp(1.5rem, 3vw, 2rem);
+
+    font-weight: 800;
+
+    line-height: 1.3;
+
+}
+
+.reportes-identidad p {
+
+    margin: 0;
+
+    color: #66829d;
+
+    font-weight: 700;
+
+}
+
+/* Sesión */
+
+.reportes-sesion {
+
+    padding: 15px 20px;
+
+    background: rgba(255,255,255,.85);
+
+    border: 1px solid #e0edf8;
+
+    border-radius: 18px;
+
+    box-shadow: 0 8px 25px rgba(45,93,140,.06);
+
+}
+
+.reportes-sesion p {
+
+    margin: 0 0 10px;
+
+    color: #66829d;
+
+    font-size: .9rem;
+
+}
+
+.reportes-sesion strong {
+
+    color: #245c98;
+
+}
+
+.sesion-indicador {
+
+    display: inline-block;
+
+    width: 9px;
+
+    height: 9px;
+
+    margin-right: 5px;
+
+    border-radius: 50%;
+
+    background: #37b887;
+
+}
+
+.reportes-sesion form {
+
+    margin: 0;
+
+}
+
+.boton-cerrar-sesion {
+
+    padding: 9px 15px;
+
+    background: #fff0f0;
+
+    color: #b52c39;
+
+    box-shadow: none;
+
+}
+
+.boton-cerrar-sesion:hover {
+
+    background: #ffe0e0;
+
+    color: #a32933;
+
+}
+
+/* Panel blanco */
+
+.reportes-panel {
+
+    padding: 32px;
+
+    background: rgba(255,255,255,.96);
+
+    border: 1px solid #e0edf8;
+
+    border-radius: 25px;
+
+    box-shadow: 0 18px 55px rgba(45,93,140,.10);
+
+}
+
+.reportes-panel-superior {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 20px;
+
+    margin-bottom: 25px;
+
+}
+
+.reportes-panel-superior h2 {
+
+    margin: 0 0 6px;
+
+    color: #245c98;
+
+    font-family: 'Poppins', sans-serif;
+
+    font-size: 1.5rem;
+
+    font-weight: 800;
+
+}
+
+.reportes-descripcion {
+
+    margin: 0;
+
+    color: #7890a5;
+
+}
+
+/* Nuevo reporte */
+
+.boton-nuevo-reporte {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 13px 20px;
+
+    background: #4597e8;
+
+    color: white;
+
+    border-radius: 13px;
+
+    font-family: 'Poppins', sans-serif;
+
+    font-size: .9rem;
+
+    font-weight: 700;
+
+    box-shadow: 0 6px 15px rgba(69,151,232,.2);
+
+}
+
+.boton-nuevo-reporte:hover {
+
+    background: #245c98;
+
+    color: white;
+
+    text-decoration: none;
+
+}
+
+/* Contador */
+
+.reportes-resumen {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    width: fit-content;
+
+    min-width: 210px;
+
+    padding: 16px 22px;
+
+    margin-bottom: 25px;
+
+    background: #eaf5ff;
+
+    border: 1px solid #d4eaff;
+
+    border-radius: 16px;
+
+}
+
+.resumen-icono {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 50px;
+
+    height: 50px;
+
+    border-radius: 13px;
+
+    background: white;
+
+    font-size: 25px;
+
+}
+
+.resumen-etiqueta {
+
+    display: block;
+
+    color: #66829d;
+
+    font-size: .85rem;
+
+    font-weight: 700;
+
+}
+
+.resumen-numero {
+
+    display: block;
+
+    color: #245c98;
+
+    font-family: 'Poppins', sans-serif;
+
+    font-size: 1.8rem;
+
+    line-height: 1.2;
+
+}
+
+/* Tabla */
+
+.reportes-tabla-contenedor {
+
+    width: 100%;
+
+    overflow-x: auto;
+
+}
+
+.tabla-reportes {
+
+    width: 100%;
+
+    min-width: 850px;
+
+    margin: 0;
+
+}
+
+.tabla-reportes th {
+
+    background: #e3f3ff;
+
+    color: #245c98;
+
+    padding: 16px;
+
+}
+
+.tabla-reportes td {
+
+    padding: 17px 15px;
+
+    color: #42576d;
+
+}
+
+.reporte-id {
+
+    display: inline-block;
+
+    min-width: 32px;
+
+    padding: 5px 8px;
+
+    background: #f0f5fa;
+
+    border-radius: 8px;
+
+    color: #66829d;
+
+    font-weight: 800;
+
+    text-align: center;
+
+}
+
+.reporte-titulo {
+
+    color: #245c98 !important;
+
+    font-weight: 800;
+
+}
+
+.reporte-ubicacion {
+
+    font-weight: 700;
+
+}
+
+/* Etiquetas de estado */
+
+.reporte-estado {
+
+    display: inline-block;
+
+    padding: 7px 12px;
+
+    border-radius: 30px;
+
+    font-size: .8rem;
+
+    font-weight: 800;
+
+    white-space: nowrap;
+
+}
+
+.estado-pendiente {
+
+    background: #fff3ce;
+
+    color: #a56b0a;
+
+}
+
+.estado-revision {
+
+    background: #e3f3ff;
+
+    color: #245c98;
+
+}
+
+.estado-resuelto {
+
+    background: #e4f8ee;
+
+    color: #24856b;
+
+}
+
+/* Botones de acciones */
+
+.reportes-acciones {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    flex-wrap: wrap;
+
+}
+
+.tabla-reportes .accion-editar {
+
+    display: inline-block;
+
+    margin: 0;
+
+    padding: 8px 13px;
+
+    border-radius: 9px;
+
+    background: #e3f3ff;
+
+    color: #245c98;
+
+    font-size: .85rem;
+
+    font-weight: 800;
+
+}
+
+.tabla-reportes .accion-editar:hover {
+
+    background: #cdeaff;
+
+    text-decoration: none;
+
+}
+
+.formulario-eliminar {
+
+    display: inline-block;
+
+    margin: 0;
+
+}
+
+.tabla-reportes .accion-eliminar {
+
+    margin: 0;
+
+    padding: 8px 13px;
+
+    background: #fff0f0;
+
+    color: #b52c39;
+
+    border-radius: 9px;
+
+    box-shadow: none;
+
+    font-family: 'Nunito', sans-serif;
+
+    font-size: .85rem;
+
+    font-weight: 800;
+
+}
+
+.tabla-reportes .accion-eliminar:hover {
+
+    background: #ffe0e0;
+
+    color: #a32933;
+
+}
+
+/* Sin reportes */
+
+.reportes-vacio {
+
+    padding: 35px !important;
+
+    text-align: center;
+
+    color: #7890a5 !important;
+
+}
+
+/* Pie institucional */
+
+.reportes-pie {
+
+    margin-top: 25px;
+
+    color: #9c7a2c;
+
+    font-family: 'Nunito', sans-serif;
+
+    font-size: .88rem;
+
+    font-weight: 800;
+
+    text-align: center;
+
+}
+
+.reportes-pie span {
+
+    color: #66829d;
+
+}
+
+/* Adaptación a celulares */
+
+@media (max-width: 700px) {
+
+    .pagina-reportes {
+
+        padding: 20px 15px;
+
+    }
+
+    .reportes-encabezado {
+
+        align-items: flex-start;
+
+    }
+
+    .reportes-logo {
+
+        width: 75px;
+
+        height: 75px;
+
+    }
+
+    .reportes-marca {
+
+        gap: 12px;
+
+    }
+
+    .reportes-identidad h1 {
+
+        font-size: 1.25rem;
+
+    }
+
+    .reportes-identidad p {
+
+        font-size: .85rem;
+
+    }
+
+    .reportes-sesion {
+
+        width: 100%;
+
+    }
+
+    .reportes-panel {
+
+        padding: 22px 15px;
+
+    }
+
+    .reportes-panel-superior {
+
+        align-items: stretch;
+
+    }
+
+    .boton-nuevo-reporte {
+
+        width: 100%;
+
+    }
+
+    .reportes-pie span {
+
+        display: block;
+
+    }
+
+}
+
+/* ==========================================
+
+   BUSCADOR Y FILTROS DE REPORTES
+
+   ========================================== */
+
+.reportes-filtros {
+
+    margin: 0 0 28px;
+
+    padding: 24px;
+
+    background: #f8fcff;
+
+    border: 1px solid #dceaf7;
+
+    border-radius: 18px;
+
+}
+
+.filtros-encabezado h3 {
+
+    margin: 0 0 5px;
+
+    color: #245c98;
+
+    font-family: 'Poppins', sans-serif;
+
+    font-size: 1.05rem;
+
+    font-weight: 800;
+
+}
+
+.filtros-encabezado p {
+
+    margin: 0 0 20px;
+
+    color: #7890a5;
+
+    font-size: .9rem;
+
+}
+
+.formulario-filtros {
+
+    display: flex;
+
+    align-items: flex-end;
+
+    flex-wrap: wrap;
+
+    gap: 15px;
+
+    margin: 0;
+
+}
+
+.filtro-campo {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 7px;
+
+}
+
+.filtro-busqueda {
+
+    flex: 2;
+
+    min-width: 230px;
+
+}
+
+.filtro-estado {
+
+    flex: 1;
+
+    min-width: 190px;
+
+}
+
+.filtro-campo label {
+
+    margin: 0;
+
+    color: #294b70;
+
+    font-size: .88rem;
+
+    font-weight: 800;
+
+}
+
+.filtro-campo input,
+
+.filtro-campo select {
+
+    width: 100%;
+
+    max-width: none;
+
+    height: 48px;
+
+    padding: 10px 14px;
+
+    background: white;
+
+    border: 2px solid #dce9f4;
+
+    border-radius: 12px;
+
+    font-family: 'Nunito', sans-serif;
+
+    font-size: .95rem;
+
+}
+
+.filtros-botones {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+}
+
+.boton-buscar {
+
+    height: 48px;
+
+    padding: 0 20px;
+
+    background: #4597e8;
+
+    color: white;
+
+    border-radius: 12px;
+
+    white-space: nowrap;
+
+}
+
+.boton-buscar:hover {
+
+    background: #245c98;
+
+}
+
+.boton-limpiar {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    height: 48px;
+
+    padding: 0 18px;
+
+    background: #e3f3ff;
+
+    color: #245c98;
+
+    border-radius: 12px;
+
+    font-family: 'Poppins', sans-serif;
+
+    font-size: .85rem;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+
+}
+
+.boton-limpiar:hover {
+
+    background: #cdeaff;
+
+    color: #245c98;
+
+    text-decoration: none;
+
+}
+
+.filtros-resultados {
+
+    margin: 18px 0 0;
+
+    color: #66829d;
+
+    font-size: .9rem;
+
+    font-weight: 700;
+
+}
+
+.filtros-resultados strong {
+
+    color: #245c98;
+
+}
+
+/* Adaptación a celulares */
+
+@media (max-width: 700px) {
+
+    .reportes-filtros {
+
+        padding: 18px;
+
+    }
+
+    .formulario-filtros {
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+    }
+
+    .filtro-busqueda,
+
+    .filtro-estado {
+
+        width: 100%;
+
+        min-width: 0;
+
+    }
+
+    .filtros-botones {
+
+        width: 100%;
+
+    }
+
+    .boton-buscar,
+
+    .boton-limpiar {
+
+        flex: 1;
+
+    }
+
+}
+
+/* ==========================================
+   EXPORTAR A EXCEL - BOTONES SUPERIORES
+   ========================================== */
+
+.reportes-botones-superiores {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.boton-exportar-excel {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 13px 20px;
+    background: #24856b;
+    color: #ffffff;
+    border-radius: 13px;
+    font-family: 'Poppins', sans-serif;
+    font-size: .9rem;
+    font-weight: 700;
+    box-shadow: 0 6px 15px rgba(36,133,107,.18);
+    transition: background .2s, transform .2s;
+}
+
+.boton-exportar-excel:hover {
+    background: #196b55;
+    color: #ffffff;
+    text-decoration: none;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 700px) {
+    .reportes-botones-superiores {
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .reportes-botones-superiores .boton-exportar-excel,
+    .reportes-botones-superiores .boton-nuevo-reporte {
+        width: 100%;
+    }
 }

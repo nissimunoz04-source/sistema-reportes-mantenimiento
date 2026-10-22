@@ -4,12 +4,17 @@ package gt.edu.url.miparaiso.sistema_reportes_mantenimiento.security;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
+@EnableMethodSecurity
 public class SecurityConfig {
 
     @Bean
@@ -27,6 +32,7 @@ public class SecurityConfig {
                 .requestMatchers(
                     "/login",
                     "/estilos.css",
+                    "/logo-colegio.png",
                     "/error"
                 ).permitAll()
 
@@ -36,7 +42,8 @@ public class SecurityConfig {
                     "/reportes/*/editar"
                 ).hasRole("ADMIN")
 
-                // Solo ADMIN puede guardar y eliminar
+                // Solo ADMIN puede guardar y eliminar reportes
+                // También protege el registro de seguimientos
                 .requestMatchers(
                     HttpMethod.POST,
                     "/reportes/**"

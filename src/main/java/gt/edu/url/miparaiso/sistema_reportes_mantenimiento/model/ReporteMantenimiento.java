@@ -1,10 +1,16 @@
+
 package gt.edu.url.miparaiso.sistema_reportes_mantenimiento.model;
+
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -17,17 +23,20 @@ public class ReporteMantenimiento {
     private Long id;
 
     @NotBlank(message = "El título del reporte es obligatorio.")
-    @Size(min = 5, max = 60, message = "El título debe tener entre 5 y 60 caracteres.")
+    @Size(min = 5, max = 60,
+          message = "El título debe tener entre 5 y 60 caracteres.")
     @Column(nullable = false, length = 60)
     private String titulo;
 
     @NotBlank(message = "La descripción del problema es obligatoria.")
-    @Size(min = 10, max = 250, message = "La descripción debe tener entre 10 y 250 caracteres.")
+    @Size(min = 10, max = 250,
+          message = "La descripción debe tener entre 10 y 250 caracteres.")
     @Column(nullable = false, length = 250)
     private String descripcion;
 
     @NotBlank(message = "La ubicación del problema es obligatoria.")
-    @Size(min = 3, max = 80, message = "La ubicación debe tener entre 3 y 80 caracteres.")
+    @Size(min = 3, max = 80,
+          message = "La ubicación debe tener entre 3 y 80 caracteres.")
     @Column(nullable = false, length = 80)
     private String ubicacion;
 
@@ -38,6 +47,14 @@ public class ReporteMantenimiento {
     )
     @Column(nullable = false, length = 20)
     private String estado;
+
+    // Fecha en que se registró el reporte
+    @Column(name = "fecha_registro")
+    private LocalDateTime fechaRegistro;
+
+    // Fecha en que el reporte fue resuelto
+    @Column(name = "fecha_resolucion")
+    private LocalDateTime fechaResolucion;
 
     public ReporteMantenimiento() {
     }
@@ -52,6 +69,36 @@ public class ReporteMantenimiento {
         this.descripcion = descripcion;
         this.ubicacion = ubicacion;
         this.estado = estado;
+    }
+
+    // Se ejecuta antes de guardar un reporte nuevo
+    @PrePersist
+    public void antesDeCrear() {
+
+        if (fechaRegistro == null) {
+            fechaRegistro = LocalDateTime.now();
+        }
+
+        if ("Resuelto".equals(estado)
+                && fechaResolucion == null) {
+
+            fechaResolucion = LocalDateTime.now();
+        }
+    }
+
+    // Se ejecuta antes de actualizar un reporte
+    @PreUpdate
+    public void antesDeActualizar() {
+
+        if ("Resuelto".equals(estado)
+                && fechaResolucion == null) {
+
+            fechaResolucion = LocalDateTime.now();
+        }
+
+        if (!"Resuelto".equals(estado)) {
+            fechaResolucion = null;
+        }
     }
 
     public Long getId() {
@@ -92,5 +139,21 @@ public class ReporteMantenimiento {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public LocalDateTime getFechaRegistro() {
+        return fechaRegistro;
+    }
+
+    public void setFechaRegistro(LocalDateTime fechaRegistro) {
+        this.fechaRegistro = fechaRegistro;
+    }
+
+    public LocalDateTime getFechaResolucion() {
+        return fechaResolucion;
+    }
+
+    public void setFechaResolucion(LocalDateTime fechaResolucion) {
+        this.fechaResolucion = fechaResolucion;
     }
 }

@@ -1,0 +1,357 @@
+
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Historial de seguimiento | Mi Dulce Paraíso</title>
+
+    <link rel="stylesheet" th:href="@{/estilos.css}">
+
+    <style>
+        .seguimiento-contenedor {
+            max-width: 1050px;
+            margin: 35px auto;
+            padding: 0 20px;
+            font-family: 'Nunito', Arial, sans-serif;
+        }
+
+        .seguimiento-tarjeta {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 25px rgba(30, 70, 110, 0.08);
+        }
+
+        .seguimiento-titulo {
+            color: #285b8a;
+            font-size: 25px;
+            margin: 0 0 12px;
+        }
+
+        .seguimiento-subtitulo {
+            color: #6b8195;
+            margin-bottom: 25px;
+        }
+
+        .seguimiento-datos {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .seguimiento-dato {
+            background: #f2f8ff;
+            padding: 15px;
+            border-radius: 12px;
+        }
+
+        .seguimiento-etiqueta {
+            display: block;
+            color: #7890a5;
+            font-size: 13px;
+            font-weight: 800;
+            margin-bottom: 6px;
+        }
+
+        .seguimiento-valor {
+            color: #284e72;
+            font-weight: 800;
+            overflow-wrap: anywhere;
+        }
+
+        .seguimiento-campo {
+            width: 100%;
+            box-sizing: border-box;
+            min-height: 130px;
+            padding: 15px;
+            border: 2px solid #d8e8f7;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 15px;
+            resize: vertical;
+        }
+
+        .seguimiento-campo:focus {
+            outline: none;
+            border-color: #7eb8ed;
+        }
+
+        .seguimiento-boton {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 12px 22px;
+            background: #76b5e8;
+            color: white;
+            border: none;
+            border-radius: 11px;
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 800;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .seguimiento-boton:hover {
+            background: #4f9bd8;
+        }
+
+        .seguimiento-volver {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #316a9c;
+            font-weight: 800;
+            text-decoration: none;
+        }
+
+        .seguimiento-volver:hover {
+            text-decoration: underline;
+        }
+
+        .seguimiento-alerta {
+            padding: 14px 18px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .seguimiento-exito {
+            background: #e4f8ee;
+            color: #26785b;
+        }
+
+        .seguimiento-error {
+            background: #ffe9e9;
+            color: #b04747;
+        }
+
+        .seguimiento-lista {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .seguimiento-elemento {
+            border-left: 5px solid #80b9e9;
+            background: #f6faff;
+            padding: 18px 20px;
+            border-radius: 0 12px 12px 0;
+        }
+
+        .seguimiento-fecha {
+            color: #4385b9;
+            font-weight: 800;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .seguimiento-descripcion {
+            color: #35536b;
+            line-height: 1.7;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+        }
+
+        .seguimiento-vacio {
+            padding: 30px;
+            text-align: center;
+            color: #7b8da0;
+            background: #f6faff;
+            border-radius: 14px;
+        }
+
+        @media (max-width: 650px) {
+            .seguimiento-datos {
+                grid-template-columns: 1fr;
+            }
+
+            .seguimiento-tarjeta {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body class="pagina-reportes">
+
+    <main class="seguimiento-contenedor">
+
+        <!-- REGRESAR A REPORTES -->
+        <a th:href="@{/reportes}"
+           class="seguimiento-volver">
+            ← Volver a reportes
+        </a>
+
+        <!-- INFORMACIÓN DEL REPORTE -->
+        <section class="seguimiento-tarjeta">
+
+            <h1 class="seguimiento-titulo">
+                📋 Historial de seguimiento
+            </h1>
+
+            <p class="seguimiento-subtitulo">
+                Consulta las revisiones y reparaciones
+                realizadas a este reporte.
+            </p>
+
+            <div class="seguimiento-datos">
+
+                <div class="seguimiento-dato">
+                    <span class="seguimiento-etiqueta">
+                        TÍTULO DEL REPORTE
+                    </span>
+
+                    <span class="seguimiento-valor"
+                          th:text="${reporte.titulo}">
+                        Título del reporte
+                    </span>
+                </div>
+
+                <div class="seguimiento-dato">
+                    <span class="seguimiento-etiqueta">
+                        UBICACIÓN
+                    </span>
+
+                    <span class="seguimiento-valor"
+                          th:text="${reporte.ubicacion}">
+                        Ubicación
+                    </span>
+                </div>
+
+                <div class="seguimiento-dato">
+                    <span class="seguimiento-etiqueta">
+                        ESTADO ACTUAL
+                    </span>
+
+                    <span class="seguimiento-valor"
+                          th:text="${reporte.estado}">
+                        Pendiente
+                    </span>
+                </div>
+
+                <div class="seguimiento-dato">
+                    <span class="seguimiento-etiqueta">
+                        FECHA DE REGISTRO
+                    </span>
+
+                    <span class="seguimiento-valor"
+                          th:text="${reporte.fechaRegistro != null ? #temporals.format(reporte.fechaRegistro, 'dd/MM/yyyy HH:mm') : 'Sin fecha registrada'}">
+                        Sin fecha registrada
+                    </span>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- MENSAJES -->
+        <div class="seguimiento-alerta seguimiento-exito"
+             th:if="${mensajeExito != null}"
+             th:text="${mensajeExito}">
+        </div>
+
+        <div class="seguimiento-alerta seguimiento-error"
+             th:if="${mensajeError != null}"
+             th:text="${mensajeError}">
+        </div>
+
+        <!-- FORMULARIO SOLO PARA ADMINISTRADOR -->
+        <section class="seguimiento-tarjeta"
+                 sec:authorize="hasRole('ADMIN')">
+
+            <h2 class="seguimiento-titulo">
+                ✏️ Agregar nuevo seguimiento
+            </h2>
+
+            <p class="seguimiento-subtitulo">
+                Describe la revisión, reparación o avance
+                realizado en este reporte.
+            </p>
+
+            <form
+                th:action="@{/reportes/{id}/seguimientos(id=${reporte.id})}"
+                method="post">
+
+                <label for="descripcion"
+                       class="seguimiento-etiqueta">
+                    DESCRIPCIÓN DEL SEGUIMIENTO
+                </label>
+
+                <textarea
+                    id="descripcion"
+                    name="descripcion"
+                    class="seguimiento-campo"
+                    minlength="5"
+                    maxlength="500"
+                    required
+                    placeholder="Ej. Se revisó el aire acondicionado y se detectó que necesita limpieza de filtros."></textarea>
+
+                <button type="submit"
+                        class="seguimiento-boton">
+                    + Guardar seguimiento
+                </button>
+
+            </form>
+
+        </section>
+
+        <!-- HISTORIAL -->
+        <section class="seguimiento-tarjeta">
+
+            <h2 class="seguimiento-titulo">
+                🕒 Historial de trabajos realizados
+            </h2>
+
+            <p class="seguimiento-subtitulo">
+                Los registros se muestran del más reciente
+                al más antiguo.
+            </p>
+
+            <!-- SI NO HAY SEGUIMIENTOS -->
+            <div class="seguimiento-vacio"
+                 th:if="${#lists.isEmpty(seguimientos)}">
+
+                📭 Todavía no se han registrado seguimientos
+                para este reporte.
+
+            </div>
+
+            <!-- LISTADO DE SEGUIMIENTOS -->
+            <div class="seguimiento-lista"
+                 th:unless="${#lists.isEmpty(seguimientos)}">
+
+                <article class="seguimiento-elemento"
+                         th:each="seguimiento : ${seguimientos}">
+
+                    <div class="seguimiento-fecha"
+                         th:text="${seguimiento.fechaSeguimiento != null ? #temporals.format(seguimiento.fechaSeguimiento, 'dd/MM/yyyy HH:mm') : 'Sin fecha'}">
+                        22/10/2026 10:30
+                    </div>
+
+                    <div class="seguimiento-descripcion"
+                         th:text="${seguimiento.descripcion}">
+                        Descripción del seguimiento.
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+        <footer class="reportes-pie">
+            ☀️ Somos Cabeza y No Cola
+            <span>• Deuteronomio 28:13</span>
+        </footer>
+
+    </main>
+
+</body>
+</html>

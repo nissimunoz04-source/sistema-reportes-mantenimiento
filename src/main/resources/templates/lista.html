@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es"
       xmlns:th="http://www.thymeleaf.org"
@@ -5,116 +6,526 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reportes de Mantenimiento</title>
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Reportes de Mantenimiento | Mi Dulce Paraíso</title>
+
+    <link rel="stylesheet" th:href="@{/estilos.css}">
+
+    <style>
+        /* BOTÓN IMPRIMIR */
+        .tabla-reportes .accion-imprimir {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            padding: 8px 13px;
+            background: #e4f8ee;
+            color: #24856b;
+            border-radius: 9px;
+            font-family: 'Nunito', sans-serif;
+            font-size: .85rem;
+            font-weight: 800;
+            white-space: nowrap;
+            text-decoration: none;
+        }
+
+        .tabla-reportes .accion-imprimir:hover {
+            background: #c9f0dc;
+            color: #196b55;
+            text-decoration: none;
+        }
+
+        /* NUEVO BOTÓN HISTORIAL */
+        .tabla-reportes .accion-historial {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            padding: 8px 13px;
+            background: #eee8ff;
+            color: #7653b5;
+            border-radius: 9px;
+            font-family: 'Nunito', sans-serif;
+            font-size: .85rem;
+            font-weight: 800;
+            white-space: nowrap;
+            text-decoration: none;
+        }
+
+        .tabla-reportes .accion-historial:hover {
+            background: #ded0ff;
+            color: #603d9d;
+            text-decoration: none;
+        }
+
+        /* BOTONES DE ACCIONES */
+        .reportes-acciones {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        /* FECHAS */
+        .tabla-reportes .reporte-fecha {
+            font-size: 0.85rem;
+            color: #365b7e;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .tabla-reportes .fecha-vacia {
+            color: #9ba9b7;
+            font-weight: 500;
+        }
+
+        /* TABLA ADAPTABLE */
+        .reportes-tabla-contenedor {
+            overflow-x: auto;
+        }
+
+        .tabla-reportes {
+            min-width: 1050px;
+        }
+    </style>
 </head>
 
-<body>
+<body class="pagina-reportes">
 
-    <h1>Sistema de Reportes de Mantenimiento</h1>
+    <main class="reportes-contenedor">
 
-    <h2>Colegio Cristiano Mixto Bilingüe Mi Dulce Paraíso</h2>
+        <!-- ENCABEZADO INSTITUCIONAL -->
+        <header class="reportes-encabezado">
 
-    <!-- INFORMACIÓN DEL USUARIO CONECTADO -->
-    <div>
-        <p>
-            Sesión de:
-            <strong sec:authentication="name">usuario</strong>
-        </p>
+            <div class="reportes-marca">
 
-        <form th:action="@{/logout}" method="post">
-            <button type="submit">
-                Cerrar sesión
-            </button>
-        </form>
-    </div>
+                <img
+                    th:src="@{/logo-colegio.png}"
+                    alt="Logo del Colegio Mi Dulce Paraíso"
+                    class="reportes-logo"
+                >
 
-    <hr>
+                <div class="reportes-identidad">
 
-    <h3>Reportes registrados</h3>
+                    <h1>
+                        Sistema de Reportes de Mantenimiento
+                    </h1>
 
-    <p>
-        Total de reportes:
-        <strong th:text="${total}">0</strong>
-    </p>
+                    <p>
+                        Colegio Cristiano Mixto Bilingüe
+                        Mi Dulce Paraíso
+                    </p>
 
-    <table border="1">
+                </div>
 
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Título</th>
-                <th>Descripción</th>
-                <th>Ubicación</th>
-                <th>Estado</th>
+            </div>
 
-                <!-- SOLO ADMIN VE ESTA COLUMNA -->
-                <th sec:authorize="hasRole('ADMIN')">
-                    Acciones
-                </th>
-            </tr>
-        </thead>
+            <!-- USUARIO CONECTADO -->
+            <div class="reportes-sesion">
 
-        <tbody>
+                <p>
+                    <span class="sesion-indicador"></span>
 
-            <tr th:each="reporte : ${reportes}">
+                    Sesión de:
 
-                <td th:text="${reporte.id}">1</td>
+                    <strong sec:authentication="name">
+                        usuario
+                    </strong>
+                </p>
 
-                <td th:text="${reporte.titulo}">
-                    Título
-                </td>
+                <form th:action="@{/logout}" method="post">
 
-                <td th:text="${reporte.descripcion}">
-                    Descripción
-                </td>
+                    <button
+                        type="submit"
+                        class="boton-cerrar-sesion"
+                    >
+                        Cerrar sesión
+                    </button>
 
-                <td th:text="${reporte.ubicacion}">
-                    Ubicación
-                </td>
+                </form>
 
-                <td th:text="${reporte.estado}">
-                    Estado
-                </td>
+            </div>
 
-                <!-- SOLO ADMIN PUEDE VER EDITAR Y ELIMINAR -->
-                <td sec:authorize="hasRole('ADMIN')">
+        </header>
 
-                    <!-- EDITAR -->
-                    <a th:href="@{/reportes/{id}/editar(id=${reporte.id})}">
-                        Editar
+        <!-- PANEL PRINCIPAL -->
+        <section class="reportes-panel">
+
+            <div class="reportes-panel-superior">
+
+                <div>
+
+                    <h2>Reportes registrados</h2>
+
+                    <p class="reportes-descripcion">
+                        Consulta y administra las necesidades
+                        de mantenimiento del colegio.
+                    </p>
+
+                </div>
+
+                <!-- BOTONES SUPERIORES -->
+                <div class="reportes-botones-superiores">
+
+                    <!-- EXPORTAR A EXCEL -->
+                    <a
+                        th:href="@{/reportes/exportar(buscar=${buscar},estado=${estadoSeleccionado})}"
+                        class="boton-exportar-excel"
+                    >
+                        📊 Exportar a Excel
                     </a>
 
-                    <!-- ELIMINAR -->
-                    <form
-                        th:action="@{/reportes/{id}/eliminar(id=${reporte.id})}"
-                        method="post"
-                        style="display:inline;">
+                    <!-- NUEVO REPORTE: SOLO ADMIN -->
+                    <a
+                        th:href="@{/reportes/nuevo}"
+                        sec:authorize="hasRole('ADMIN')"
+                        class="boton-nuevo-reporte"
+                    >
+                        + Nuevo reporte
+                    </a>
 
-                        <button type="submit">
-                            Eliminar
+                </div>
+
+            </div>
+
+            <!-- CONTADOR DE REPORTES -->
+            <div class="reportes-resumen">
+
+                <div class="resumen-icono">
+                    📋
+                </div>
+
+                <div>
+
+                    <span class="resumen-etiqueta">
+                        Total de reportes
+                    </span>
+
+                    <strong
+                        class="resumen-numero"
+                        th:text="${total}"
+                    >
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+            <!-- BUSCADOR Y FILTROS -->
+            <section class="reportes-filtros">
+
+                <div class="filtros-encabezado">
+
+                    <h3>Buscar y filtrar reportes</h3>
+
+                    <p>
+                        Encuentra rápidamente los reportes
+                        que necesitas consultar.
+                    </p>
+
+                </div>
+
+                <form
+                    th:action="@{/reportes}"
+                    method="get"
+                    class="formulario-filtros"
+                >
+
+                    <!-- BUSCAR POR TÍTULO O UBICACIÓN -->
+                    <div class="filtro-campo filtro-busqueda">
+
+                        <label for="buscar">
+                            Buscar por título o ubicación
+                        </label>
+
+                        <input
+                            type="search"
+                            id="buscar"
+                            name="buscar"
+                            placeholder="Ej. ventilador, lámpara, salón..."
+                            th:value="${buscar}"
+                        >
+
+                    </div>
+
+                    <!-- FILTRO DE ESTADO -->
+                    <div class="filtro-campo filtro-estado">
+
+                        <label for="estado">
+                            Estado del reporte
+                        </label>
+
+                        <select id="estado" name="estado">
+
+                            <option
+                                value=""
+                                th:selected="${estadoSeleccionado == null or estadoSeleccionado == ''}"
+                            >
+                                Todos los estados
+                            </option>
+
+                            <option
+                                value="Pendiente"
+                                th:selected="${estadoSeleccionado == 'Pendiente'}"
+                            >
+                                Pendiente
+                            </option>
+
+                            <option
+                                value="En revisión"
+                                th:selected="${estadoSeleccionado == 'En revisión'}"
+                            >
+                                En revisión
+                            </option>
+
+                            <option
+                                value="Resuelto"
+                                th:selected="${estadoSeleccionado == 'Resuelto'}"
+                            >
+                                Resuelto
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <!-- BOTONES DE BÚSQUEDA -->
+                    <div class="filtros-botones">
+
+                        <button
+                            type="submit"
+                            class="boton-buscar"
+                        >
+                            🔍 Buscar
                         </button>
 
-                    </form>
+                        <a
+                            th:href="@{/reportes}"
+                            class="boton-limpiar"
+                        >
+                            Limpiar
+                        </a>
 
-                </td>
+                    </div>
 
-            </tr>
+                </form>
 
-        </tbody>
+                <p class="filtros-resultados">
 
-    </table>
+                    Resultados encontrados:
 
-    <br>
+                    <strong th:text="${totalFiltrados}">
+                        0
+                    </strong>
 
-    <!-- SOLO ADMIN PUEDE REGISTRAR REPORTES -->
-    <a th:href="@{/reportes/nuevo}"
-       sec:authorize="hasRole('ADMIN')">
+                </p>
 
-        Registrar nuevo reporte
+            </section>
 
-    </a>
+            <!-- TABLA DE REPORTES -->
+            <div class="reportes-tabla-contenedor">
+
+                <table class="tabla-reportes">
+
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Título</th>
+                            <th>Descripción</th>
+                            <th>Ubicación</th>
+                            <th>Estado</th>
+                            <th>Fecha de registro</th>
+                            <th>Fecha de resolución</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <!-- SIN RESULTADOS -->
+                        <tr th:if="${#lists.isEmpty(reportes)}">
+
+                            <td
+                                colspan="8"
+                                class="reportes-vacio"
+                            >
+                                No se encontraron reportes
+                                con los filtros seleccionados.
+                            </td>
+
+                        </tr>
+
+                        <!-- LISTADO CON NUMERACIÓN CONSECUTIVA -->
+                        <tr th:each="reporte, contador : ${reportes}">
+
+                            <!-- NÚMERO CONSECUTIVO -->
+                            <td>
+
+                                <span
+                                    class="reporte-id"
+                                    th:text="${contador.count}"
+                                >
+                                    1
+                                </span>
+
+                            </td>
+
+                            <!-- TÍTULO -->
+                            <td
+                                class="reporte-titulo"
+                                th:text="${reporte.titulo}"
+                            >
+                                Título
+                            </td>
+
+                            <!-- DESCRIPCIÓN -->
+                            <td th:text="${reporte.descripcion}">
+                                Descripción
+                            </td>
+
+                            <!-- UBICACIÓN -->
+                            <td>
+
+                                <span
+                                    class="reporte-ubicacion"
+                                    th:text="${reporte.ubicacion}"
+                                >
+                                    Ubicación
+                                </span>
+
+                            </td>
+
+                            <!-- ESTADO -->
+                            <td>
+
+                                <span
+                                    class="reporte-estado"
+                                    th:classappend="${reporte.estado != null and reporte.estado.equalsIgnoreCase('Resuelto')} ? ' estado-resuelto' : (${reporte.estado != null and reporte.estado.equalsIgnoreCase('Pendiente')} ? ' estado-pendiente' : ' estado-revision')"
+                                    th:text="${reporte.estado}"
+                                >
+                                    Pendiente
+                                </span>
+
+                            </td>
+
+                            <!-- FECHA DE REGISTRO -->
+                            <td>
+
+                                <span
+                                    class="reporte-fecha"
+                                    th:if="${reporte.fechaRegistro != null}"
+                                    th:text="${#temporals.format(reporte.fechaRegistro, 'dd/MM/yyyy HH:mm')}"
+                                >
+                                    22/10/2026 10:30
+                                </span>
+
+                                <span
+                                    class="reporte-fecha fecha-vacia"
+                                    th:if="${reporte.fechaRegistro == null}"
+                                >
+                                    —
+                                </span>
+
+                            </td>
+
+                            <!-- FECHA DE RESOLUCIÓN -->
+                            <td>
+
+                                <span
+                                    class="reporte-fecha"
+                                    th:if="${reporte.fechaResolucion != null}"
+                                    th:text="${#temporals.format(reporte.fechaResolucion, 'dd/MM/yyyy HH:mm')}"
+                                >
+                                    22/10/2026 11:00
+                                </span>
+
+                                <span
+                                    class="reporte-fecha fecha-vacia"
+                                    th:if="${reporte.fechaResolucion == null}"
+                                >
+                                    —
+                                </span>
+
+                            </td>
+
+                            <!-- ACCIONES -->
+                            <td>
+
+                                <div class="reportes-acciones">
+
+                                    <!-- EDITAR: SOLO ADMIN -->
+                                    <a
+                                        sec:authorize="hasRole('ADMIN')"
+                                        th:href="@{/reportes/{id}/editar(id=${reporte.id})}"
+                                        class="accion-editar"
+                                    >
+                                        Editar
+                                    </a>
+
+                                    <!-- IMPRIMIR -->
+                                    <a
+                                        th:href="@{/reportes/{id}/imprimir(id=${reporte.id})}"
+                                        target="_blank"
+                                        rel="noopener"
+                                        class="accion-imprimir"
+                                    >
+                                        🖨️ Imprimir
+                                    </a>
+
+                                    <!-- HISTORIAL: ADMIN Y PERSONAL -->
+                                    <a
+                                        th:href="@{/reportes/{id}/seguimientos(id=${reporte.id})}"
+                                        class="accion-historial"
+                                    >
+                                        📋 Historial
+                                    </a>
+
+                                    <!-- ELIMINAR: SOLO ADMIN -->
+                                    <form
+                                        sec:authorize="hasRole('ADMIN')"
+                                        th:action="@{/reportes/{id}/eliminar(id=${reporte.id})}"
+                                        method="post"
+                                        class="formulario-eliminar"
+                                    >
+
+                                        <button
+                                            type="submit"
+                                            class="accion-eliminar"
+                                            onclick="return confirm('¿Estás seguro de que deseas eliminar este reporte?');"
+                                        >
+                                            Eliminar
+                                        </button>
+
+                                    </form>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+        <!-- PIE INSTITUCIONAL -->
+        <footer class="reportes-pie">
+
+            ☀️ Somos Cabeza y No Cola
+
+            <span>• Deuteronomio 28:13</span>
+
+        </footer>
+
+    </main>
 
 </body>
-
 </html>
