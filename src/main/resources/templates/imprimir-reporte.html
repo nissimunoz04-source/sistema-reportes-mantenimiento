@@ -1,0 +1,318 @@
+
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title th:text="'Ficha de mantenimiento N.º ' + ${reporte.id}">
+        Ficha de mantenimiento
+    </title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Poppins:wght@400;600;700;800&display=swap');
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 30px 15px;
+            background: #edf6ff;
+            color: #293d55;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        .acciones {
+            max-width: 850px;
+            margin: 0 auto 20px;
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .boton {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .volver {
+            background: white;
+            color: #245c98;
+        }
+
+        .imprimir {
+            background: #4597e8;
+            color: white;
+        }
+
+        .hoja {
+            max-width: 850px;
+            min-height: 700px;
+            margin: auto;
+            padding: 35px 40px;
+            background: white;
+            border-radius: 14px;
+            box-shadow: 0 10px 35px rgba(45,93,140,.12);
+        }
+
+        .encabezado {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding-bottom: 22px;
+            border-bottom: 1px solid #dce9f4;
+        }
+
+        .logo {
+            width: 75px;
+            height: 75px;
+            object-fit: contain;
+            flex-shrink: 0;
+        }
+
+        .nombre-colegio {
+            margin: 0 0 5px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            font-weight: 800;
+            color: #245c98;
+            line-height: 1.4;
+        }
+
+        .subtitulo {
+            margin: 0;
+            color: #66829d;
+            font-size: 12px;
+        }
+
+        .titulo-ficha {
+            margin: 24px 0 20px;
+            padding: 12px;
+            border-radius: 10px;
+            background: #e3f3ff;
+            text-align: center;
+        }
+
+        .titulo-ficha h1 {
+            margin: 0;
+            color: #245c98;
+            font-family: 'Poppins', sans-serif;
+            font-size: 18px;
+            font-weight: 800;
+        }
+
+        .datos {
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+        .dato {
+            margin: 0 0 12px;
+            overflow-wrap: anywhere;
+        }
+
+        .dato strong {
+            color: #20242a;
+            font-weight: 800;
+        }
+
+        /* ESPACIO PARA ANOTACIONES A MANO */
+        .espacio-en-blanco {
+            height: 5cm;
+        }
+
+        .firmas {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            break-inside: avoid;
+        }
+
+        .firma {
+            padding-top: 9px;
+            border-top: 1px solid #94a3b8;
+            color: #64748b;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        @page {
+            size: letter;
+            margin: 15mm;
+        }
+
+        @media print {
+            body {
+                margin: 0;
+                padding: 0;
+                background: white;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .acciones {
+                display: none;
+            }
+
+            .hoja {
+                max-width: none;
+                min-height: auto;
+                padding: 0;
+                border-radius: 0;
+                box-shadow: none;
+            }
+
+            .titulo-ficha {
+                background: #e3f3ff !important;
+            }
+
+            .espacio-en-blanco {
+                height: 5cm;
+            }
+        }
+
+        @media screen and (max-width: 600px) {
+            .hoja {
+                padding: 20px;
+            }
+
+            .encabezado {
+                gap: 12px;
+            }
+
+            .logo {
+                width: 60px;
+                height: 60px;
+            }
+
+            .nombre-colegio {
+                font-size: 13px;
+            }
+
+            .titulo-ficha h1 {
+                font-size: 15px;
+            }
+
+            .acciones {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- BOTONES DE NAVEGACIÓN -->
+    <div class="acciones">
+
+        <a th:href="@{/reportes}"
+           class="boton volver">
+            ← Volver a reportes
+        </a>
+
+        <button type="button"
+                class="boton imprimir"
+                onclick="window.print()">
+            🖨️ Imprimir reporte
+        </button>
+
+    </div>
+
+    <!-- FICHA DE MANTENIMIENTO -->
+    <main class="hoja">
+
+        <!-- ENCABEZADO DEL COLEGIO -->
+        <header class="encabezado">
+
+            <img th:src="@{/logo-colegio.png}"
+                 alt="Logo del colegio"
+                 class="logo">
+
+            <div>
+                <h2 class="nombre-colegio">
+                    COLEGIO CRISTIANO MIXTO BILINGÜE
+                    MI DULCE PARAÍSO
+                </h2>
+
+                <p class="subtitulo">
+                    Sistema de Reportes de Mantenimiento
+                </p>
+            </div>
+
+        </header>
+
+        <!-- TÍTULO DE LA FICHA -->
+        <section class="titulo-ficha">
+
+            <h1>
+                FICHA DE MANTENIMIENTO —
+                N.º
+                <span th:text="${reporte.id}">1</span>
+            </h1>
+
+        </section>
+
+        <!-- DATOS DEL REPORTE -->
+        <section class="datos">
+
+            <p class="dato">
+                <strong>Título:</strong>
+                <span th:text="${reporte.titulo}">
+                    Ventilador dañado
+                </span>
+            </p>
+
+            <p class="dato">
+                <strong>Ubicación:</strong>
+                <span th:text="${reporte.ubicacion}">
+                    Salón de 3ro. Primaria
+                </span>
+            </p>
+
+            <p class="dato">
+                <strong>Estado:</strong>
+                <span th:text="${reporte.estado}">
+                    Resuelto
+                </span>
+            </p>
+
+            <p class="dato">
+                <strong>Descripción:</strong>
+                <span th:text="${reporte.descripcion}">
+                    El ventilador dejó de funcionar.
+                </span>
+            </p>
+
+        </section>
+
+        <!-- ESPACIO EN BLANCO DE 5 CENTÍMETROS -->
+        <div class="espacio-en-blanco"></div>
+
+        <!-- FIRMAS -->
+        <section class="firmas">
+
+            <div class="firma">
+                Firma del responsable
+            </div>
+
+            <div class="firma">
+                Vo. Bo. Dirección
+            </div>
+
+        </section>
+
+    </main>
+
+</body>
+</html>
