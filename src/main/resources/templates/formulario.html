@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Reporte de Mantenimiento</title>
+    <title>Reporte de Mantenimiento | Mi Dulce Paraíso</title>
 
     <link rel="stylesheet" th:href="@{/estilos.css}">
 </head>
@@ -24,10 +24,16 @@
           method="post"
           novalidate>
 
-        <!-- ID oculto: permite actualizar sin crear un registro duplicado -->
+        <!-- ID oculto para editar registros -->
         <input type="hidden" th:field="*{id}">
 
-        <!-- Resumen de errores -->
+        <!-- Protección CSRF -->
+        <input type="hidden"
+               th:if="${_csrf != null}"
+               th:name="${_csrf.parameterName}"
+               th:value="${_csrf.token}">
+
+        <!-- RESUMEN DE ERRORES -->
         <div class="resumen-errores"
              role="alert"
              th:if="${#fields.hasAnyErrors()}">
@@ -45,13 +51,14 @@
 
         </div>
 
-        <!-- TÍTULO -->
+        <!-- 1. TÍTULO -->
         <div>
             <label for="titulo">Título del reporte:</label>
 
             <input type="text"
                    id="titulo"
                    th:field="*{titulo}"
+                   maxlength="60"
                    aria-describedby="error-titulo">
 
             <p id="error-titulo"
@@ -64,14 +71,15 @@
 
         <br>
 
-        <!-- DESCRIPCIÓN -->
+        <!-- 2. DESCRIPCIÓN -->
         <div>
-            <label for="descripcion">Descripción:</label>
+            <label for="descripcion">Descripción del problema:</label>
 
-            <input type="text"
-                   id="descripcion"
-                   th:field="*{descripcion}"
-                   aria-describedby="error-descripcion">
+            <textarea id="descripcion"
+                      th:field="*{descripcion}"
+                      rows="4"
+                      maxlength="250"
+                      aria-describedby="error-descripcion"></textarea>
 
             <p id="error-descripcion"
                class="mensaje-error"
@@ -83,13 +91,14 @@
 
         <br>
 
-        <!-- UBICACIÓN -->
+        <!-- 3. UBICACIÓN -->
         <div>
-            <label for="ubicacion">Ubicación:</label>
+            <label for="ubicacion">Ubicación del problema:</label>
 
             <input type="text"
                    id="ubicacion"
                    th:field="*{ubicacion}"
+                   maxlength="80"
                    aria-describedby="error-ubicacion">
 
             <p id="error-ubicacion"
@@ -102,14 +111,20 @@
 
         <br>
 
-        <!-- ESTADO -->
+        <!-- 4. ESTADO -->
         <div>
-            <label for="estado">Estado:</label>
+            <label for="estado">Estado del reporte:</label>
 
-            <input type="text"
-                   id="estado"
-                   th:field="*{estado}"
-                   aria-describedby="error-estado">
+            <select id="estado"
+                    th:field="*{estado}"
+                    aria-describedby="error-estado">
+
+                <option value="">Seleccione un estado</option>
+                <option value="Pendiente">Pendiente</option>
+                <option value="En revisión">En revisión</option>
+                <option value="Resuelto">Resuelto</option>
+
+            </select>
 
             <p id="error-estado"
                class="mensaje-error"
@@ -121,6 +136,102 @@
 
         <br>
 
+        <!-- 5. FECHA DE REGISTRO -->
+        <!-- Se genera automáticamente desde Java -->
+
+        <!-- 6. FECHA DE RESOLUCIÓN -->
+        <!-- Se genera automáticamente cuando el reporte se resuelve -->
+
+        <!-- 7. REPORTADO POR -->
+        <div>
+            <label for="reportadoPor">Nombre de quien reporta:</label>
+
+            <input type="text"
+                   id="reportadoPor"
+                   th:field="*{reportadoPor}"
+                   maxlength="80"
+                   aria-describedby="error-reportadoPor">
+
+            <p id="error-reportadoPor"
+               class="mensaje-error"
+               th:if="${#fields.hasErrors('reportadoPor')}"
+               th:errors="*{reportadoPor}">
+                Error en el nombre
+            </p>
+        </div>
+
+        <br>
+
+        <!-- 8. PRIORIDAD -->
+        <div>
+            <label for="prioridad">Prioridad del reporte:</label>
+
+            <select id="prioridad"
+                    th:field="*{prioridad}"
+                    aria-describedby="error-prioridad">
+
+                <option value="">Seleccione una prioridad</option>
+                <option value="Baja">Baja</option>
+                <option value="Media">Media</option>
+                <option value="Alta">Alta</option>
+
+            </select>
+
+            <p id="error-prioridad"
+               class="mensaje-error"
+               th:if="${#fields.hasErrors('prioridad')}"
+               th:errors="*{prioridad}">
+                Error en la prioridad
+            </p>
+        </div>
+
+        <br>
+
+        <!-- 9. TIPO DE MANTENIMIENTO -->
+        <div>
+            <label for="tipoMantenimiento">Tipo de mantenimiento:</label>
+
+            <select id="tipoMantenimiento"
+                    th:field="*{tipoMantenimiento}"
+                    aria-describedby="error-tipoMantenimiento">
+
+                <option value="">Seleccione un tipo</option>
+                <option value="Preventivo">Preventivo</option>
+                <option value="Correctivo">Correctivo</option>
+
+            </select>
+
+            <p id="error-tipoMantenimiento"
+               class="mensaje-error"
+               th:if="${#fields.hasErrors('tipoMantenimiento')}"
+               th:errors="*{tipoMantenimiento}">
+                Error en el tipo de mantenimiento
+            </p>
+        </div>
+
+        <br>
+
+        <!-- 10. OBSERVACIONES -->
+        <div>
+            <label for="observaciones">Observaciones adicionales:</label>
+
+            <textarea id="observaciones"
+                      th:field="*{observaciones}"
+                      rows="3"
+                      maxlength="250"
+                      aria-describedby="error-observaciones"></textarea>
+
+            <p id="error-observaciones"
+               class="mensaje-error"
+               th:if="${#fields.hasErrors('observaciones')}"
+               th:errors="*{observaciones}">
+                Error en las observaciones
+            </p>
+        </div>
+
+        <br>
+
+        <!-- BOTÓN GUARDAR -->
         <button type="submit"
                 th:text="${reporte.id == null} ? 'Guardar reporte' : 'Guardar cambios'">
             Guardar reporte

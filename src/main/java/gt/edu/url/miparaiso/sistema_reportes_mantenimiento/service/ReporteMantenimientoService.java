@@ -1,4 +1,3 @@
-
 package gt.edu.url.miparaiso.sistema_reportes_mantenimiento.service;
 
 import java.util.List;
@@ -14,7 +13,6 @@ import gt.edu.url.miparaiso.sistema_reportes_mantenimiento.repository.Seguimient
 public class ReporteMantenimientoService {
 
     private final ReporteMantenimientoRepository repositorio;
-
     private final SeguimientoReporteRepository seguimientoRepositorio;
 
     public ReporteMantenimientoService(
@@ -25,36 +23,70 @@ public class ReporteMantenimientoService {
         this.seguimientoRepositorio = seguimientoRepositorio;
     }
 
+    // Listar todos los reportes
     public List<ReporteMantenimiento> listarTodos() {
         return repositorio.findAll();
     }
 
+    // Buscar un reporte por su ID
     public ReporteMantenimiento buscarPorId(Long id) {
         return repositorio.findById(id)
                 .orElseThrow(() ->
                         new IllegalArgumentException(
-                                "No existe un reporte de mantenimiento con id " + id));
+                                "No existe un reporte de mantenimiento con id " + id
+                        )
+                );
     }
 
+    // Crear o actualizar un reporte
+    @Transactional
     public ReporteMantenimiento guardar(ReporteMantenimiento reporte) {
-        return repositorio.save(reporte);
+
+        // Si el reporte es nuevo, guardarlo normalmente
+        if (reporte.getId() == null) {
+            return repositorio.save(reporte);
+        }
+
+        // Si ya existe, recuperar el registro original
+        ReporteMantenimiento existente =
+                buscarPorId(reporte.getId());
+
+        // Actualizar únicamente los datos editables
+        existente.setTitulo(reporte.getTitulo());
+        existente.setDescripcion(reporte.getDescripcion());
+        existente.setUbicacion(reporte.getUbicacion());
+        existente.setEstado(reporte.getEstado());
+
+        // Nuevos campos de la Semana 15
+        existente.setReportadoPor(reporte.getReportadoPor());
+        existente.setPrioridad(reporte.getPrioridad());
+        existente.setTipoMantenimiento(reporte.getTipoMantenimiento());
+        existente.setObservaciones(reporte.getObservaciones());
+
+        // No modificar fechaRegistro:
+        // se conserva la fecha original del reporte.
+
+        // fechaResolucion se actualiza mediante @PreUpdate
+        // cuando cambia el estado del reporte.
+
+        return repositorio.save(existente);
     }
 
+    // Eliminar un reporte y sus seguimientos
     @Transactional
     public void eliminar(Long id) {
 
-        // Verificar que el reporte exista
         ReporteMantenimiento reporte = buscarPorId(id);
 
-        // Eliminar primero los seguimientos asociados
         seguimientoRepositorio.deleteAll(
-                seguimientoRepositorio.findByReporteIdOrderByFechaSeguimientoDesc(id)
+                seguimientoRepositorio
+                        .findByReporteIdOrderByFechaSeguimientoDesc(id)
         );
 
-        // Eliminar el reporte después de sus seguimientos
         repositorio.delete(reporte);
     }
 
+    // Contar reportes
     public long contar() {
         return repositorio.count();
     }

@@ -88,7 +88,7 @@
         }
 
         .tabla-reportes {
-            min-width: 1050px;
+            min-width: 700px;
         }
     </style>
 </head>
@@ -333,13 +333,10 @@
 
                     <thead>
                         <tr>
-                            <th>No.</th>
                             <th>Título</th>
-                            <th>Descripción</th>
                             <th>Ubicación</th>
                             <th>Estado</th>
-                            <th>Fecha de registro</th>
-                            <th>Fecha de resolución</th>
+                            <th>Prioridad</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -348,111 +345,42 @@
 
                         <!-- SIN RESULTADOS -->
                         <tr th:if="${#lists.isEmpty(reportes)}">
-
-                            <td
-                                colspan="8"
-                                class="reportes-vacio"
-                            >
-                                No se encontraron reportes
-                                con los filtros seleccionados.
+                            <td colspan="5" class="reportes-vacio">
+                                No se encontraron reportes con los filtros seleccionados.
                             </td>
-
                         </tr>
 
-                        <!-- LISTADO CON NUMERACIÓN CONSECUTIVA -->
-                        <tr th:each="reporte, contador : ${reportes}">
-
-                            <!-- NÚMERO CONSECUTIVO -->
-                            <td>
-
-                                <span
-                                    class="reporte-id"
-                                    th:text="${contador.count}"
-                                >
-                                    1
-                                </span>
-
-                            </td>
+                        <!-- CUATRO CAMPOS PRINCIPALES -->
+                        <tr th:each="reporte : ${reportes}">
 
                             <!-- TÍTULO -->
-                            <td
-                                class="reporte-titulo"
-                                th:text="${reporte.titulo}"
-                            >
+                            <td class="reporte-titulo" th:text="${reporte.titulo}">
                                 Título
-                            </td>
-
-                            <!-- DESCRIPCIÓN -->
-                            <td th:text="${reporte.descripcion}">
-                                Descripción
                             </td>
 
                             <!-- UBICACIÓN -->
                             <td>
-
-                                <span
-                                    class="reporte-ubicacion"
-                                    th:text="${reporte.ubicacion}"
-                                >
+                                <span class="reporte-ubicacion" th:text="${reporte.ubicacion}">
                                     Ubicación
                                 </span>
-
                             </td>
 
                             <!-- ESTADO -->
                             <td>
-
                                 <span
                                     class="reporte-estado"
                                     th:classappend="${reporte.estado != null and reporte.estado.equalsIgnoreCase('Resuelto')} ? ' estado-resuelto' : (${reporte.estado != null and reporte.estado.equalsIgnoreCase('Pendiente')} ? ' estado-pendiente' : ' estado-revision')"
-                                    th:text="${reporte.estado}"
-                                >
+                                    th:text="${reporte.estado}">
                                     Pendiente
                                 </span>
-
                             </td>
 
-                            <!-- FECHA DE REGISTRO -->
-                            <td>
-
-                                <span
-                                    class="reporte-fecha"
-                                    th:if="${reporte.fechaRegistro != null}"
-                                    th:text="${#temporals.format(reporte.fechaRegistro, 'dd/MM/yyyy HH:mm')}"
-                                >
-                                    22/10/2026 10:30
-                                </span>
-
-                                <span
-                                    class="reporte-fecha fecha-vacia"
-                                    th:if="${reporte.fechaRegistro == null}"
-                                >
-                                    —
-                                </span>
-
+                            <!-- PRIORIDAD -->
+                            <td th:text="${reporte.prioridad != null ? reporte.prioridad : 'Sin asignar'}">
+                                Media
                             </td>
 
-                            <!-- FECHA DE RESOLUCIÓN -->
-                            <td>
-
-                                <span
-                                    class="reporte-fecha"
-                                    th:if="${reporte.fechaResolucion != null}"
-                                    th:text="${#temporals.format(reporte.fechaResolucion, 'dd/MM/yyyy HH:mm')}"
-                                >
-                                    22/10/2026 11:00
-                                </span>
-
-                                <span
-                                    class="reporte-fecha fecha-vacia"
-                                    th:if="${reporte.fechaResolucion == null}"
-                                >
-                                    —
-                                </span>
-
-                            </td>
-
-                            <!-- ACCIONES -->
+                    <!-- ACCIONES -->
                             <td>
 
                                 <div class="reportes-acciones">

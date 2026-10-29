@@ -1,4 +1,3 @@
-
 package gt.edu.url.miparaiso.sistema_reportes_mantenimiento.model;
 
 import java.time.LocalDateTime;
@@ -22,24 +21,28 @@ public class ReporteMantenimiento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // 1. Título del reporte
     @NotBlank(message = "El título del reporte es obligatorio.")
     @Size(min = 5, max = 60,
           message = "El título debe tener entre 5 y 60 caracteres.")
     @Column(nullable = false, length = 60)
     private String titulo;
 
+    // 2. Descripción del problema
     @NotBlank(message = "La descripción del problema es obligatoria.")
     @Size(min = 10, max = 250,
           message = "La descripción debe tener entre 10 y 250 caracteres.")
     @Column(nullable = false, length = 250)
     private String descripcion;
 
+    // 3. Ubicación del problema
     @NotBlank(message = "La ubicación del problema es obligatoria.")
     @Size(min = 3, max = 80,
           message = "La ubicación debe tener entre 3 y 80 caracteres.")
     @Column(nullable = false, length = 80)
     private String ubicacion;
 
+    // 4. Estado del reporte
     @NotBlank(message = "El estado del reporte es obligatorio.")
     @Pattern(
         regexp = "Pendiente|En revisión|Resuelto",
@@ -48,17 +51,50 @@ public class ReporteMantenimiento {
     @Column(nullable = false, length = 20)
     private String estado;
 
-    // Fecha en que se registró el reporte
+    // 5. Fecha de registro
     @Column(name = "fecha_registro")
     private LocalDateTime fechaRegistro;
 
-    // Fecha en que el reporte fue resuelto
+    // 6. Fecha de resolución
     @Column(name = "fecha_resolucion")
     private LocalDateTime fechaResolucion;
 
+    // 7. Persona que reporta el problema
+    @NotBlank(message = "El nombre de quien reporta es obligatorio.")
+    @Size(max = 80,
+          message = "El nombre no puede superar los 80 caracteres.")
+    @Column(nullable = false, length = 80)
+    private String reportadoPor;
+
+    // 8. Prioridad del reporte
+    @NotBlank(message = "La prioridad del reporte es obligatoria.")
+    @Pattern(
+        regexp = "Baja|Media|Alta",
+        message = "La prioridad debe ser Baja, Media o Alta."
+    )
+    @Column(nullable = false, length = 10)
+    private String prioridad;
+
+    // 9. Tipo de mantenimiento
+    @NotBlank(message = "El tipo de mantenimiento es obligatorio.")
+    @Pattern(
+        regexp = "Preventivo|Correctivo",
+        message = "El tipo debe ser Preventivo o Correctivo."
+    )
+    @Column(nullable = false, length = 20)
+    private String tipoMantenimiento;
+
+    // 10. Observaciones adicionales (opcional)
+    @Size(max = 250,
+          message = "Las observaciones no pueden superar los 250 caracteres.")
+    @Column(length = 250)
+    private String observaciones;
+
+    // Constructor vacío
     public ReporteMantenimiento() {
     }
 
+    // Constructor original para conservar compatibilidad
     public ReporteMantenimiento(
             String titulo,
             String descripcion,
@@ -69,6 +105,27 @@ public class ReporteMantenimiento {
         this.descripcion = descripcion;
         this.ubicacion = ubicacion;
         this.estado = estado;
+    }
+
+    // Constructor con los nuevos campos
+    public ReporteMantenimiento(
+            String titulo,
+            String descripcion,
+            String ubicacion,
+            String estado,
+            String reportadoPor,
+            String prioridad,
+            String tipoMantenimiento,
+            String observaciones) {
+
+        this.titulo = titulo;
+        this.descripcion = descripcion;
+        this.ubicacion = ubicacion;
+        this.estado = estado;
+        this.reportadoPor = reportadoPor;
+        this.prioridad = prioridad;
+        this.tipoMantenimiento = tipoMantenimiento;
+        this.observaciones = observaciones;
     }
 
     // Se ejecuta antes de guardar un reporte nuevo
@@ -100,6 +157,8 @@ public class ReporteMantenimiento {
             fechaResolucion = null;
         }
     }
+
+    // GETTERS Y SETTERS
 
     public Long getId() {
         return id;
@@ -155,5 +214,37 @@ public class ReporteMantenimiento {
 
     public void setFechaResolucion(LocalDateTime fechaResolucion) {
         this.fechaResolucion = fechaResolucion;
+    }
+
+    public String getReportadoPor() {
+        return reportadoPor;
+    }
+
+    public void setReportadoPor(String reportadoPor) {
+        this.reportadoPor = reportadoPor;
+    }
+
+    public String getPrioridad() {
+        return prioridad;
+    }
+
+    public void setPrioridad(String prioridad) {
+        this.prioridad = prioridad;
+    }
+
+    public String getTipoMantenimiento() {
+        return tipoMantenimiento;
+    }
+
+    public void setTipoMantenimiento(String tipoMantenimiento) {
+        this.tipoMantenimiento = tipoMantenimiento;
+    }
+
+    public String getObservaciones() {
+        return observaciones;
+    }
+
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
     }
 }
