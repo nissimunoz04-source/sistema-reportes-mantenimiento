@@ -113,6 +113,18 @@ Cuando la aplicación termine de iniciar, abrir:
 http://localhost:8080
 
 Para iniciar sesión deben utilizarse las credenciales configuradas en el entorno.
+
+### Usuarios de prueba
+
+El sistema cuenta con dos roles de acceso:
+
+- ADMIN: puede registrar, consultar, editar y eliminar reportes.
+- PERSONAL: tiene acceso a las consultas autorizadas.
+
+Para realizar las pruebas, el evaluador debe utilizar las credenciales de demostración proporcionadas por el equipo.
+
+Por seguridad, las contraseñas no se publican en GitHub. Se configuran mediante las variables de entorno ADMIN_PASSWORD y PERSONAL_PASSWORD.
+
 9. Ejecutar pruebas
 Para ejecutar las pruebas automatizadas:
 .\mvnw.cmd test
@@ -147,11 +159,25 @@ Colegio Cristiano Mixto Bilingüe Mi Dulce Paraíso
 Puerto Barrios, Izabal, Guatemala.
 14. Autores
 - Maggie Nissi Mía Muñoz Salguero
-- Sergio Orellana
+- Orellana Marín Sergio Wilfredo
 Proyecto académico desarrollado para el curso de Programación I.
-15. Estado del proyecto
-El sistema cuenta con una versión funcional publicada en Render.
 
-Durante la Semana 15 se actualizaron los campos de la entidad, las validaciones, el formulario, el listado y las pruebas de funcionamiento.
+## 15. Estado del proyecto
 
-También se verificó la persistencia de los reportes después de reiniciar el servicio publicado.
+El Sistema de Reportes de Mantenimiento se encuentra funcional y publicado en Render mediante HTTPS.
+
+Durante la Semana 16 se realizó una revisión de aseguramiento de calidad (QA) directamente en la aplicación de producción.
+
+Se ejecutaron cinco pruebas funcionales:
+
+- CP-01: Carga correcta del formulario de registro.
+- CP-02: Validación de campos obligatorios con mensajes en español.
+- CP-03: Registro válido y redirección al listado.
+- CP-04: Visualización de los reportes después de actualizar la página.
+- CP-05: Protección de rutas frente a usuarios no autenticados.
+
+Las cinco pruebas obtuvieron resultados satisfactorios.
+
+También se verificó que los registros permanecen disponibles después de actualizar la página.
+
+El proyecto se mantiene en GitHub y utiliza Render para su publicación en producción.
