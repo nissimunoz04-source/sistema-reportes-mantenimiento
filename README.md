@@ -181,3 +181,24 @@ Las cinco pruebas obtuvieron resultados satisfactorios.
 También se verificó que los registros permanecen disponibles después de actualizar la página.
 
 El proyecto se mantiene en GitHub y utiliza Render para su publicación en producción.
+
+## Semana 17 - Entrega Parcial 4
+
+### Video A - Pitch ejecutivo (3 minutos)
+https://www.youtube.com/watch?v=wUkNo0P4-R8
+
+### Video B - Demostración técnica (5 minutos)
+https://youtu.be/mOJzYdxiado
+
+### Aplicación publicada
+https://sistema-reportes-mantenimiento.onrender.com
+
+### Institución beneficiaria
+Colegio Cristiano Mixto Bilingüe Mi Dulce Paraíso
+
+### Equipo desarrollador
+- Maggie Nissi Mía Muñoz Salguero
+- Sergio Wilfredo Orellana Marín
+
+### Documentación
+Manual de usuario en español, disponible como parte de la entrega académica de Semana 17.
